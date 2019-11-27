@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block container %}
+        
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <h2><center>CREER DES UTILISATEURS</center></h2>
+    </div>
+</div>
+
+<form method='post'>{% csrf_token %}
+  <center><input type='submit' value='Enregister'/></center>
+</form>
+<div class="row">
+  <form class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="col-md-6 col-lg-6 col-xl-6">
+        <div class="form-group">
+          <!--<label for="">Nom:</label>-->
+          {{form.nom.label}} : {{form.nom}}
+        </div>
+    </div>  
+    <div class="col-md-6 col-lg-6 col-xl-6">
+      <div class="form-group">
+        <!--<label for="">Prenom:</label>-->
+        {{form.prenom.label}} : {{form.prenom}}
+      </div>
+    </div>
+  </form>
+</div>
+<div class="row">
+  <form class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="col-md-6 col-lg-6 col-xl-6">
+      <div class="form-group">
+        <!--<label for="">Contact:</label>-->
+        {{form.num_tel.label}} : {{form.num_tel}}
+      </div>
+    </div>  
+    <div class="col-md-6 col-lg-6 col-xl-6">
+      <div class="form-group">
+        <!--<label for="exampleInputEmail1">Adresse:</label>-->
+        {{form.adresse.label}} : {{form.adresse}}
+      </div>
+    </div>
+  </form>
+</div>
+<div class="row">
+  <form class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="col-md-6 col-lg-6 col-xl-6">
+      <div class="form-group">
+        <!--<label for="">Login:</label>-->
+        {{form.login.label}} : {{form.login}}
+      </div>
+    </div>  
+    <div class="col-md-6 col-lg-6 col-xl-6 form-group">
+      <!-- <label for="exampleInputEmail1">Password:</label>-->
+      {{form.password.label}} : {{form.password}}
+    </div>
+  </form>
+  </div>
+  <div class="row">
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-lg-6 col-xl-6">
+        <form class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="form-group">
+            <!--<label for="">Email:</label>-->
+            {{form.email.label}} : {{form.email}}
+          </div>
+    </div>
+    <div class="col-md-6 col-lg-6 col-xl-6">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-lg-6 col-xl-6">
+        <center><a class="btn btn-secondary btn-lg" href="#" role="button" style="margin-left: 500px">Enregistrement</a></center>
+    </div>  
+    <!--<div class="col-md-6 col-lg-6 col-xl-6">
+        <a class="btn btn-primary" href="#" role="button" style="margin-left: 34px">Retour</a>
+    </div>-->
+  </div>
+  jdjdjdj
+  <div class="row">
+    <div class="col-md-12 col-lg-12 col-xl-12">
+        <table class="table table-bordered" style="margin-top: 2em">
+        <thead>
+          <tr>
+            <th scope="col">N</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Prenom</th>
+            <th scope="col">Adresse</th>
+            <th scope="col">Contact</th>
+            <th scope="col">Categorie</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><button class="btn btn-danger " name="supprimer"  title="supprimer info"><i class="icon-remove icon-white"></i>supprimer</button>
+            <button  type="submit" class="btn btn-warning" name="modifier" title="modifier info">
+                    <span class="icon-edit icon-white"></span>modifier</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div> 
+    
+{% endblock %}

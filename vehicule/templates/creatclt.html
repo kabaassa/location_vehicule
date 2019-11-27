@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block container %}
+        
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <h2><center>CREER DES UTILISATEURS </center></h2>
+    </div>
+</div>
+
+<form method='post'>{% csrf_token %}
+  {{form.errors}}
+  <div class="row">
+    <div class="col-md-6 col-lg-6 col-xl-6">
+        <div class="form-group">
+          <!--<label for="">Nom:</label>-->
+          {{form.nom.label}} : {{form.nom}}
+        </div>
+    </div>  
+    <div class="col-md-6 col-lg-6 col-xl-6">
+      <div class="form-group">
+        <!--<label for="">Prenom:</label>-->
+        {{form.prenom.label}} : {{form.prenom}}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+      <div class="col-md-6 col-lg-6 col-xl-6">
+        <div class="form-group">
+          <!--<label for="">Contact:</label>-->
+          {{form.num_tel.label}} : {{form.num_tel}}
+        </div>
+      </div>  
+      <div class="col-md-6 col-lg-6 col-xl-6">
+        <div class="form-group">
+          <!--<label for="exampleInputEmail1">Adresse:</label>-->
+          {{form.adresse.label}} : {{form.adresse}}
+        </div>
+      </div>
+  </div>
+  <div class="row">
+      <div class="col-md-6 col-lg-6 col-xl-6">
+        <div class="form-group">
+          <!--<label for="">Login:</label>-->
+          {{form.num_permis.label}} : {{form.num_permis}}
+        </div>
+      </div>  
+  </div>
+  <div class="row"> 
+  </div>
+  <center><button type="submit" class="btn btn-primary">Enregistrer</button></center>
+</form>
+
+
+  <div class="row">
+    <div class="col-md-12 col-lg-12 col-xl-12">
+        <table class="table table-bordered" style="margin-top: 2em">
+        <thead>
+          <tr>
+            <th scope="col">N</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Prenom</th>
+            <th scope="col">Adresse</th>
+            <th scope="col">Contact</th>
+            <th scope="col">Permis</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+           {% for c in  clt  %}
+          <tr>
+            <td>{{c.id}}</td>
+            <td>{{c.nom}}</td>
+            <td>{{c.prenom}}</td>
+            <td>{{c.adresse}}</td>
+            <td>{{c.num_tel}}</td>
+            <td>{{c.num_permis}}</td>
+            <td><button class="btn btn-danger " name="supprimer"  title="supprimer info"><i class="icon-remove icon-white"></i>supprimer</button>
+            <button  type="submit" class="btn btn-warning" name="modifier" title="modifier info">
+                    <span class="icon-edit icon-white"></span>modifier</button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div> 
+  </div>
+    
+  
+{% endblock %}
