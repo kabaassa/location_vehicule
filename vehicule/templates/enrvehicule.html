@@ -3,7 +3,12 @@
 {% block container %}
         
 
-<div class="row">
+<div class="row-fluid">
+  <div class="block">
+  <div class="navbar navbar-inner block-header">
+       <div class="muted pull-left">Form Example</div>
+   </div>
+ </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <h2><center>ENREGISTREMENT DES  VEHICULES </center></h2>
     </div>
@@ -55,10 +60,25 @@
     <div class="col-md-6 col-lg-6 col-xl-6">
     </div>
   </div>
-  <button type="submit" class="btn btn-primary">Enregistrer</button>
+  <div class="row">
+    <div class="col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+             <center><button type="submit" class="btn btn-primary" style="margin-left: 500px">Enregistrer</button></center>
+          </div>
+    </div>
+    <div class="col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <center><a href="#" type="submit" class="btn btn-primary" style="margin-right: 700px">Retour</a></center> 
+          </div>
+    </div>
+  </div>
 </form>
-
-
+<br/><br/>
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <h2><center>LISTE DES VEHICULES</center></h2>
+    </div>
+</div>
   <div class="row">
     <div class="col-md-12 col-lg-12 col-xl-12">
         <table class="table table-bordered" style="margin-top: 2em">
