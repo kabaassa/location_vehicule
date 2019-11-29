@@ -3,3 +3,4 @@
 */migrations/*
 */_pycache_/*
 *.pyc
+settings_local.py
