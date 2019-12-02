@@ -69,4 +69,4 @@ class Vehicule(models.Model):
     marque=models.CharField (max_length=100,null=False, blank=False)
 
     def __str__(self):
-       return '{} {} {} {} {} '.format(self.matricule,self.couleur,self.modele,self.montant,self.date_enreg)
+       return '{} {} {} {} {} '.format(self.matricule,self.couleur,self.modele,self.montant,self.date_enr)
