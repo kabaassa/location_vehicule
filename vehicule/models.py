@@ -9,17 +9,14 @@ from django.contrib.auth.models import (
 
 
 class UtilisateurManager(BaseUserManager):
-    def create_user(self, email, date_of_birth, password=None):
+    def create_user(self, username, password=None):
         """
         Creates and saves a User with the given email, date of
         birth and password.
         """
-        if not email:
-            raise ValueError('Users must have an email address')
 
         user = self.model(
-            email=self.normalize_email(email),
-            date_of_birth=date_of_birth,
+            username=username,
         )
 
         user.set_password(password)
@@ -32,7 +29,7 @@ class UtilisateurManager(BaseUserManager):
         birth and password.
         """
         user = self.create_user(
-            username=username,
+            username,
             password=password,
         )
         user.is_admin = True
@@ -61,7 +58,7 @@ class Utilisateur(AbstractBaseUser):
     prenom = models.CharField("Prénoms", max_length=100, null=True, blank=True)
     sexe = models.CharField("Sexe", choices=SEXE.items(), max_length=10)
     categorie = models.CharField("Catégorie", choices=CAT.items(), max_length=100)
-    num_tel = models.IntegerField("Téléphone")
+    num_tel = models.IntegerField("Téléphone", null=True)
     adresse = models.CharField("Adresse", max_length=150, null=True, blank=True)
     datecreat = models.DateTimeField(default=datetime.now)
     email = models.EmailField("E-mail", max_length=255, unique=True, null=True, blank=True)

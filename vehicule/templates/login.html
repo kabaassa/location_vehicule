@@ -1,0 +1,223 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>SB Admin - Tables</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+
+  <!-- Page level plugin CSS-->
+  <link href="{% static 'vendor/datatables/dataTables.bootstrap4.css' %}" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="{% static 'css/sb-admin.css' %}" rel="stylesheet">
+  <link href="{% static 'bootstrap/css/bootstrap.min.css'%}" rel="stylesheet" media="screen">
+  <link href="{% static 'vendors/fullcalendar/fullcalendar.css' %}" rel="stylesheet" media="screen">
+  <link href="{% static 'assets/styles.css'%}" rel="stylesheet" media="screen">
+  <script src="{% static 'vendors/modernizr-2.6.2-respond-1.1.0.min.js'%}"></script> 
+</head>
+<!--<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Login</button>
+</form>-->
+<body class="bg-dark">
+  <div class="container">
+    <div class="card card-login mx-auto mt-5">
+      <center><div class="card-header" style="background-image": url("../static/img/img1.png");>AUTHENTIFICATION</div></center>
+      <div class="card-body">
+        <form>
+          <div class="form-group">
+            <div class="form-label-group">
+              <input type="login" id="" class="form-control" placeholder="votre login" required="required" autofocus="autofocus">
+              <label for="inputlogin">Login</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-label-group">
+              <input type="password" id="inputPassword" class="form-control" placeholder="votre password" required="required">
+              <label for="inputPassword">Password</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="checkbox">
+              <!--<label>
+                <input type="checkbox" value="remember-me">
+                 
+              </label>-->
+            </div>
+          </div>
+          <a class="btn btn-primary btn-block" href="">envoyer</a>
+        </form>
+        <div class="text-center">
+          <a class="d-block small mt-3" href="">password oublier</a>
+          <a class="d-block small" href="">changer Password?</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+  <!-- Page level plugin JavaScript-->
+  <script src="{% static 'vendor/datatables/jquery.dataTables.js' %}"></script>
+  <script src="{% static 'vendor/datatables/dataTables.bootstrap4.js' %}"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="{% static 'js/sb-admin.min.js' %}"></script>
+
+  <!-- Demo scripts for this page-->
+  <script src="{% static 'js/demo/datatables-demo.js' %}"></script>
+  <style>
+        #external-events {
+            float: left;
+            width: 150px;
+            padding: 0 10px;
+            border: 1px solid #ccc;
+            background: #eee;
+            text-align: left;
+            }
+            
+        #external-events h4 {
+            font-size: 16px;
+            margin-top: 0;
+            padding-top: 1em;
+            }
+            
+        .external-event { /* try to mimick the look of a real event */
+            margin: 10px 0;
+            padding: 2px 4px;
+            background: #3366CC;
+            color: #fff;
+            font-size: .85em;
+            cursor: pointer;
+            z-index: 99999999;
+            }
+            
+        #external-events p {
+            margin: 1.5em 0;
+            font-size: 11px;
+            color: #666;
+            }
+            
+        #external-events p input {
+            margin: 0;
+            vertical-align: middle;
+            }
+
+        </style>
+        <!--/.fluid-container-->
+        <script src="{% static 'vendors/jquery-1.9.1.min.js'%}"></script>
+        <script src="{% static 'vendors/jquery-ui-1.10.3.js'%"></script>
+        <script src="{ static 'bootstrap/js/bootstrap.min.js'%"></script>
+        <script src="{% static'vendors/fullcalendar/fullcalendar.js'%"></script>
+        <script src="{% static 'vendors/fullcalendar/gcal.js'%}"></script>
+        <script src="{% static 'assets/scripts.js'%"></script>
+        <script>
+        $(function() {
+            // Easy pie charts
+            var calendar = $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next',
+                center: 'title',
+                right: 'month,basicWeek,basicDay'
+            },
+            selectable: true,
+            selectHelper: true,
+            select: function(start, end, allDay) {
+                var title = prompt('Event Title:');
+                if (title) {
+                    calendar.fullCalendar('renderEvent',
+                        {
+                            title: title,
+                            start: start,
+                            end: end,
+                            allDay: allDay
+                        },
+                        true // make the event "stick"
+                    );
+                }
+                calendar.fullCalendar('unselect');
+            },
+            droppable: true, // this allows things to be dropped onto the calendar !!!
+            drop: function(date, allDay) { // this function is called when something is dropped
+            
+                // retrieve the dropped element's stored Event Object
+                var originalEventObject = $(this).data('eventObject');
+                
+                // we need to copy it, so that multiple events don't have a reference to the same object
+                var copiedEventObject = $.extend({}, originalEventObject);
+                
+                // assign it the date that was reported
+                copiedEventObject.start = date;
+                copiedEventObject.allDay = allDay;
+                
+                // render the event on the calendar
+                // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+                $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+                
+                // is the "remove after drop" checkbox checked?
+                if ($('#drop-remove').is(':checked')) {
+                    // if so, remove the element from the "Draggable Events" list
+                    $(this).remove();
+                }
+                
+            },
+            editable: true,
+            // US Holidays
+            events: 'http://www.google.com/calendar/feeds/usa__en%40holiday.calendar.google.com/public/basic'
+            
+            });
+        });
+
+        $('#external-events div.external-event').each(function() {
+        
+            // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+            // it doesn't need to have a start or end
+            var eventObject = {
+                title: $.trim($(this).text()) // use the element's text as the event title
+            };
+            
+            // store the Event Object in the DOM element so we can get to it later
+            $(this).data('eventObject', eventObject);
+            
+            // make the event draggable using jQuery UI
+            $(this).draggable({
+                zIndex: 999999999,
+                revert: true,      // will cause the event to go back to its
+                revertDuration: 0  //  original position after the drag
+            });
+            
+        });
+        </script>
+
+  
+
+</body>
+
+</html>
+
+
