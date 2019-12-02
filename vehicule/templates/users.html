@@ -1,90 +1,146 @@
 {% extends "base.html" %}
 
+{% load static i18n staticfiles widget_tweaks %}
 {% block container %}
-        
+
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      <h2><center>CREER DES UTILISATEURS</center></h2>
+      <h2><center>CREER DES UTILISATEURS </center></h2>
     </div>
 </div>
-
 <form method='post'>{% csrf_token %}
-  <center><input type='submit' value='Enregister'/></center>
-</form>
-<div class="row">
-  <form class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  {{form.errors}}
+  <div class="row">
+      <div class="col-md-6 col-lg-6 col-xl-6">
+        <div class="form-label-group">
+            {% render_field form.username class="form-control" placeholder=form.username.label %}
+            {% if form.username.help_text %}
+               <p class="help-block"><small>{{ form.username.help_text }}</small></p>
+            {% endif %}
+          <label for="inputlogin">{{form.username.label}}</label>
+        </div>
+      </div>
+      <div class="col-md-3 col-lg-3 col-xl-3 form-group">
+          <div class="form-label-group">
+            {% render_field form.password1 class="form-control" placeholder=form.password1.label %}
+            {% if form.password1.help_text %}
+               <p class="help-block"><small>{{ form.password1.help_text }}</small></p>
+            {% endif %}
+          <label for="inputlogin">{{form.password1.label}}</label>
+        </div>
+      </div>
+      <div class="col-md-3 col-lg-3 col-xl-3 form-group">
+        <div class="form-label-group">
+          {% render_field form.password2 class="form-control" placeholder=form.password2.label %}
+          {% if form.password2.help_text %}
+             <p class="help-block"><small>{{ form.password2.help_text }}</small></p>
+          {% endif %}
+          <label for="inputlogin">{{form.password2.label}}</label>
+        </div>
+      </div>
+  </div>
+  <hr/>
+  <div class="row">
     <div class="col-md-6 col-lg-6 col-xl-6">
         <div class="form-group">
-          <!--<label for="">Nom:</label>-->
-          {{form.nom.label}} : {{form.nom}}
+          <div class="form-label-group">
+            {% render_field form.nom class="form-control" placeholder=form.nom.label %}
+            {% if form.nom.help_text %}
+               <p class="help-block"><small>{{ form.nom.help_text }}</small></p>
+            {% endif %}
+            <label for="inputlogin">{{form.nom.label}}</label>
+          </div>
         </div>
-    </div>  
+    </div>
     <div class="col-md-6 col-lg-6 col-xl-6">
       <div class="form-group">
-        <!--<label for="">Prenom:</label>-->
-        {{form.prenom.label}} : {{form.prenom}}
+        <div class="form-label-group">
+          {% render_field form.prenom class="form-control" placeholder=form.prenom.label %}
+          {% if form.prenom.help_text %}
+             <p class="help-block"><small>{{ form.prenom.help_text }}</small></p>
+          {% endif %}
+          <label for="inputlogin">{{form.prenom.label}}</label>
+        </div>
       </div>
     </div>
-  </form>
-</div>
-<div class="row">
-  <form class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-    <div class="col-md-6 col-lg-6 col-xl-6">
-      <div class="form-group">
-        <!--<label for="">Contact:</label>-->
-        {{form.num_tel.label}} : {{form.num_tel}}
-      </div>
-    </div>  
-    <div class="col-md-6 col-lg-6 col-xl-6">
-      <div class="form-group">
-        <!--<label for="exampleInputEmail1">Adresse:</label>-->
-        {{form.adresse.label}} : {{form.adresse}}
-      </div>
-    </div>
-  </form>
-</div>
-<div class="row">
-  <form class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-    <div class="col-md-6 col-lg-6 col-xl-6">
-      <div class="form-group">
-        <!--<label for="">Login:</label>-->
-        {{form.login.label}} : {{form.login}}
-      </div>
-    </div>  
-    <div class="col-md-6 col-lg-6 col-xl-6 form-group">
-      <!-- <label for="exampleInputEmail1">Password:</label>-->
-      {{form.password.label}} : {{form.password}}
-    </div>
-  </form>
   </div>
   <div class="row">
+      <div class="col-md-6 col-lg-6 col-xl-6">
+        <div class="form-label-group">
+          {% render_field form.num_tel class="form-control" placeholder=form.num_tel.label %}
+          {% if form.num_tel.help_text %}
+             <p class="help-block"><small>{{ form.num_tel.help_text }}</small></p>
+          {% endif %}
+          <label for="inputlogin">{{form.num_tel.label}}</label>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-6 col-xl-6">
+        <div class="form-label-group">
+          {% render_field form.adresse class="form-control" placeholder=form.adresse.label %}
+          {% if form.adresse.help_text %}
+             <p class="help-block"><small>{{ form.adresse.help_text }}</small></p>
+          {% endif %}
+          <label for="inputlogin">{{form.adresse.label}}</label>
+        </div>
+      </div>
   </div>
   <div class="row">
-    <div class="col-md-6 col-lg-6 col-xl-6">
-        <form class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="col-md-4 col-lg-4 col-xl-4">
           <div class="form-group">
             <!--<label for="">Email:</label>-->
-            {{form.email.label}} : {{form.email}}
+            E-mail : {{form.email|add_class:"form-control"}}
           </div>
     </div>
-    <div class="col-md-6 col-lg-6 col-xl-6">
+    <div class="col-md-4 col-lg-4 col-xl-4">
+          <div class="form-group">
+            <!--<label for="">Email:</label>-->
+            {{form.categorie.label}} : {{form.categorie|add_class:"form-control"}}
+          </div>
+    </div>
+    <div class="col-md-4 col-lg-4 col-xl-4">
+          <div class="form-group">
+            <!--<label for="">Email:</label>-->
+            {{form.sexe.label}} : {{form.sexe|add_class:"form-control"}}
+          </div>
     </div>
   </div>
   <div class="row">
-    <div class="col-md-6 col-lg-6 col-xl-6">
-        <center><a class="btn btn-secondary btn-lg" href="#" role="button" style="margin-left: 500px">Enregistrement</a></center>
-    </div>  
-    <!--<div class="col-md-6 col-lg-6 col-xl-6">
-        <a class="btn btn-primary" href="#" role="button" style="margin-left: 34px">Retour</a>
-    </div>-->
+    <div class="col-md-3 col-lg-3 col-xl-3">
+          <div class="form-group">
+            <label class="form-check-label" for="exampleCheck1">{{form.is_active.label}}</label>
+            {{form.is_active|add_class:"form-check-input"}}
+          </div>
+
+    </div>
   </div>
-  
+  <div class="row">
+    <div class="col-md-3 col-lg-3 col-xl-3"></div>
+    <div class="col-md-3 col-lg-3 col-xl-3">
+          <div class="form-group">
+             <center><button type="submit" class="btn btn-primary">Enregistrer</button></center>
+          </div>
+    </div>
+    <div class="col-md-3 col-lg-3 col-xl-3">
+          <div class="form-group">
+            <center><a href="#" type="submit" class="btn btn-primary" >Retour</a></center>
+          </div>
+    </div>
+    <div class="col-md-3 col-lg-3 col-xl-3"></div>
+  </div>
+</form>
+<br/><br/><br/>
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <h2><center>LISTE DES UTILISATEURS</center></h2>
+    </div>
+</div>
   <div class="row">
     <div class="col-md-12 col-lg-12 col-xl-12">
-        <table class="table table-bordered" style="margin-top: 2em">
+        <table class="table table-bordered"  style="margin-top: 2em">
         <thead>
-          <tr>
+          <tr class="table-active">
             <th scope="col">N</th>
+            <th scope="col">Identifiant</th>
             <th scope="col">Nom</th>
             <th scope="col">Prenom</th>
             <th scope="col">Adresse</th>
@@ -94,20 +150,23 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+           {% for c in  ut  %}
+          <tr class="table table-striped">
+            <td>{{c.id}}</td>
+            <td>{{c.username}}</td>
+            <td>{{c.nom}}</td>
+            <td>{{c.prenom}}</td>
+            <td>{{c.adresse}}</td>
+            <td>{{c.num_tel}}</td>
+            <td>{{c.categorie}}</td>
             <td><button class="btn btn-danger " name="supprimer"  title="supprimer info"><i class="icon-remove icon-white"></i>supprimer</button>
             <button  type="submit" class="btn btn-warning" name="modifier" title="modifier info">
                     <span class="icon-edit icon-white"></span>modifier</button>
             </td>
           </tr>
+          {% endfor %}
         </tbody>
       </table>
-    </div> 
-    
+    </div>
+  </div>
 {% endblock %}

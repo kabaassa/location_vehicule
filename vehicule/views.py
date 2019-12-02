@@ -1,45 +1,56 @@
-from django.http import HttpResponse 
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.shortcuts import redirect
-from vehicule.forms import  ClientForm, UtilisateurForm, VehiculeForm
+from django.contrib.auth.decorators import login_required
+from vehicule.forms import  ClientForm, UserCreationForm, VehiculeForm
 from vehicule.models import Client, Utilisateur, Vehicule
 
+
+@login_required
 def index(request):
     return render(request, 'base.html', {})
 
+
+@login_required
 def listveh(request):
     return render(request, 'listveh.html', {})
 
+
+@login_required
 def navgerant(request):
     return render(request, 'navgerant.html', {})
 
+
+@login_required
 def login(request):
     return render(request, 'login.html', {})
 
+
+@login_required
 def home(request):
-	ctx = {'my_name': 'KABA', 'data': [8, 3, 5, 9, 'Totote']}
+    ctx = {'my_name': 'KABA', 'data': [8, 3, 5, 9, 'Totote']}
 
-	return render(request, 'home.html', ctx)
+    return render(request, 'home.html', ctx)
 
+
+@login_required
 def users(request):
     cxt={}
     ut = Utilisateur.objects.all()
     cxt.update({'ut': ut})
-    print('FFF')
     if request.method == 'POST':
-        print('POST')
-        utilisateur_form = UtilisateurForm(request.POST)
+        utilisateur_form = UserCreationForm(request.POST)
         if utilisateur_form.is_valid():
-            print('is valide')
             utilisateur_form.save()
-            print('is save')
-            redirect('enrvehicule')
+            redirect('users')
             # do something.
     else:
-        utilisateur_form = UtilisateurForm()
+        utilisateur_form = UserCreationForm()
     cxt.update({'form': utilisateur_form})
-    return render(request, 'users_.html', cxt)
+    return render(request, 'users.html', cxt)
 
+
+@login_required
 def creatclt(request):
     cxt={}
     clt = Client.objects.all()
@@ -72,4 +83,3 @@ def enrvehicule(request):
 
 def listveh(request):
     return render(request,'listveh.html', {})
-

@@ -23,13 +23,13 @@ from django.conf.urls.static import static
 admin.autodiscover()
 
 urlpatterns = [
-    path('', views.login, name='login'),
-	path('vehicule/home', views.home, name='home'),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('', views.home, name='home'),
     path('vehicule/users', views.users, name='users'),
-    path('vehicule/creatclt',views.creatclt, name='creatclt'),
+    path('vehicule/creatclt', views.creatclt, name='creatclt'),
     path('vehicule/enrvehicule', views.enrvehicule, name='enrvehicule'),
     path('vehicule/listveh', views.listveh, name='listveh'),
     path('vehicule/navgerant', views.navgerant, name='navgerant'),
-	path('vehicule/', include('vehicule.urls')),
+    path('vehicule/', include('vehicule.urls')),
     path('admin/', admin.site.urls),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
