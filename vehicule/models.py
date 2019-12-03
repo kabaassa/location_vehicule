@@ -1,11 +1,7 @@
 from datetime import datetime, date
 from django.db import models
-from django.contrib.auth.models import (AbstractBaseUser, PermissionsMixin)
-
-# Create your models here.
-from django.contrib.auth.models import (
-    BaseUserManager, AbstractBaseUser
-)
+from django.urls import reverse
+from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
 
 
 class UtilisateurManager(BaseUserManager):
@@ -42,11 +38,13 @@ class UtilisateurManager(BaseUserManager):
 
 class Utilisateur(AbstractBaseUser):
 
+    A = 'admin'
     S = 'secretaire'
     G = 'gerant'
     CAT = {
         S: 'secretaire',
-        G: 'gerant'
+        G: 'gerant',
+        A: 'Administrateur'
     }
 
     M = 'm'
@@ -56,15 +54,19 @@ class Utilisateur(AbstractBaseUser):
         F: 'femme'
     }
 
-    username = models.SlugField("Nom d'utilisateur", max_length=100, null=False, unique=True)
+    username = models.SlugField(
+        "Nom d'utilisateur", max_length=100, null=False, unique=True)
     nom = models.CharField(max_length=100, null=True, blank=True)
     prenom = models.CharField("Prénoms", max_length=100, null=True, blank=True)
     sexe = models.CharField("Sexe", choices=SEXE.items(), max_length=10)
-    categorie = models.CharField("Catégorie", choices=CAT.items(), max_length=100)
+    categorie = models.CharField(
+        "Catégorie", choices=CAT.items(), max_length=100)
     num_tel = models.IntegerField("Téléphone")
-    adresse = models.CharField("Adresse", max_length=150, null=True, blank=True)
-    datecreat = models.DateTimeField(default=datetime.now)
-    email = models.EmailField("E-mail", max_length=255, unique=True, null=True, blank=True)
+    adresse = models.CharField(
+        "Adresse", max_length=200, null=True, blank=True)
+    datecreat = models.DateTimeField(default=datetime.now, null=True)
+    email = models.EmailField(
+        "E-mail", max_length=255, unique=True, null=True, blank=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
@@ -92,36 +94,46 @@ class Utilisateur(AbstractBaseUser):
         # Simplest possible answer: All admins are staff
         return self.is_admin
 
+    def del_url(self):
+        return reverse("del_path", args=[self.username])
+
+    def edit_url(self):
+        return reverse("edit_path", args=[self.username])
+
+    def active_url(self):
+        return reverse("active_path", args=[self.username])
+
 
 class Client(models.Model):
 
     class Meta:
         pass
 
-    nom=models.CharField(null=False, blank=False,max_length=100)
-    prenom=models.CharField(null=False, blank=False,max_length=100)
-    num_tel=models.IntegerField(null=False, blank=False)
-    adresse=models.CharField(null=False, blank=False,max_length=100)
-    num_permis=models.CharField(null=False, blank=False,max_length=100)
-    ville=models.CharField(null=False,blank=False, max_length=120)
-    date_enreg=models.DateField(default=date.today)
+    user = models.ForeignKey(
+        "Utilisateur", blank=True, null=True, verbose_name="Utilisateur",
+        on_delete=models.CASCADE)
+    nom = models.CharField(null=False, blank=False, max_length=100)
+    prenom = models.CharField(null=False, blank=False, max_length=100)
+    num_tel = models.IntegerField(null=False, blank=False)
+    adresse = models.CharField(null=False, blank=False, max_length=100)
+    num_docu = models.CharField(null=False, blank=False, max_length=100)
+    localite = models.CharField(null=False, blank=False, max_length=120)
+    date_enr = models.DateTimeField(default=datetime.now)
 
     def __str__(self):
         return '{} {} {} {} {} {}'.format(
-            self.nom, self.prenom, self.num_tel, self.adresse, self.num_permis,
-            self.date_enreg)
+            self.nom, self.prenom, self.num_tel, self.adresse, self.num_docu,
+            self.date_enr)
 
 
 class Vehicule(models.Model):
-    # class Meta:
-     #     pass
-    matricule=models.CharField(max_length=100,null=False, blank=False)
-    couleur=models.CharField(max_length=100,null=False, blank=False)
-    modele=models.CharField(max_length=100,null=False, blank=False)
-    date_enr=models.DateField(default=date.today)
-    montant=models.CharField(max_length=100,null=False, blank=False)
-    marque=models.CharField(max_length=100,null=False, blank=False)
+    matricule = models.CharField(max_length=100, null=False, blank=False)
+    marque = models.CharField(max_length=100, null=False, blank=False)
+    modele = models.CharField(max_length=100, null=False, blank=False)
+    couleur = models.CharField("Couleur", max_length=100, null=False, blank=False)
+    date_enr = models.DateField(default=date.today)
+    # montant = models.CharField(max_length=100, null=False, blank=False)
 
     def __str__(self):
-        return '{} {} {} {} {} '.format(
-            self.matricule,self.couleur,self.modele,self.montant,self.date_enr)
+        return '{} {} {} {}'.format(
+            self.matricule, self.couleur, self.modele, self.date_enr)

@@ -13,14 +13,14 @@ class ClientForm(forms.ModelForm):
             'prenom': forms.TextInput(attrs={'class': 'form-control'}),
             'num_tel': forms.TextInput(attrs={'class': 'form-control'}),
             'adresse': forms.TextInput(attrs={'class': 'form-control'}),
-            'num_permis': forms.TextInput(attrs={'class': 'form-control'}),
+            'num_docu': forms.TextInput(attrs={'class': 'form-control'}),
         }
         fields = [
             'nom',
             'prenom',
             'num_tel',
             'adresse',
-            'num_permis',
+            'num_docu',
         ]
 
 
@@ -31,14 +31,12 @@ class VehiculeForm(forms.ModelForm):
             'matricule': forms.TextInput(attrs={'class': 'form-control'}),
             'couleur': forms.TextInput(attrs={'class': 'form-control'}),
             'modele': forms.TextInput(attrs={'class': 'form-control'}),
-            'montant': forms.TextInput(attrs={'class': 'form-control'}),
             'marque': forms.TextInput(attrs={'class': 'form-control'}),
         }
         fields = [
             'matricule',
             'couleur',
             'modele',
-            'montant',
             'marque',
         ]
 
@@ -81,6 +79,7 @@ class UserChangeForm(forms.ModelForm):
     class Meta:
         model = Utilisateur
         fields = ('username', 'password', 'is_active', 'is_admin')
+        exclude = ('datecreat', )
 
     def clean_password(self):
         # Regardless of what the user provides, return the initial value.

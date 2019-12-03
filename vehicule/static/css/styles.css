@@ -1,0 +1,9 @@
+.vh-title {
+    text-transform: uppercase;
+    text-align: center;
+}
+.navbar-nav-a {
+    color: #0egbff;
+    text-decoration: none;
+    background-color: transparent;
+}

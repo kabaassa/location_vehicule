@@ -20,11 +20,11 @@ class UtilisateurAdmin(BaseUserAdmin):
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
     list_display = ('username', 'is_admin')
-    list_filter = ('is_admin',)
+    list_filter = ('is_admin', 'is_active')
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
         ('Personal info', {'fields': ('nom', 'prenom', 'sexe', 'adresse', 'num_tel')}),
-        ('Permissions', {'fields': ('is_admin',)}),
+        ('Permissions', {'fields': ('is_admin', 'categorie')}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
     # overrides get_fieldsets to use this attribute when creating a user.
@@ -54,9 +54,9 @@ admin.site.register(Utilisateur, UtilisateurAdmin)
 @admin.register(Client)
 class Client(admin.ModelAdmin):
 
-    list_display = ('nom', 'prenom', 'num_tel', 'adresse', 'date_enreg', 'num_permis',)
+    list_display = ('nom', 'prenom', 'num_tel', 'adresse', 'date_enr', 'num_docu',)
 
 
 @admin.register(Vehicule)
 class Vehicule(admin.ModelAdmin):
-    list_display = ('matricule', 'couleur', 'model', 'montant', 'marque',)
+    list_display = ('matricule', 'couleur', 'model', 'marque',)
