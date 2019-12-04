@@ -1,10 +1,11 @@
 {% extends "base.html" %}
+{% load static widget_tweaks %}
 
 {% block container %}
-        
+
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      <h2><center>CREER DES UTILISATEURS </center></h2>
+      <h2 class="vh-title">Gestion des clients</h2>
     </div>
 </div>
 
@@ -13,14 +14,12 @@
   <div class="row">
     <div class="col-md-6 col-lg-6 col-xl-6">
         <div class="form-group">
-          <!--<label for="">Nom:</label>-->
-          {{form.nom.label}} : {{form.nom}}
+            {% render_field form.nom class="form-control" placeholder=form.nom.label %}
         </div>
-    </div>  
+    </div>
     <div class="col-md-6 col-lg-6 col-xl-6">
       <div class="form-group">
-        <!--<label for="">Prenom:</label>-->
-        {{form.prenom.label}} : {{form.prenom}}
+        {% render_field form.prenom class="form-control" placeholder=form.prenom.label %}
       </div>
     </div>
   </div>
@@ -28,35 +27,35 @@
       <div class="col-md-6 col-lg-6 col-xl-6">
         <div class="form-group">
           <!--<label for="">Contact:</label>-->
-          {{form.num_tel.label}} : {{form.num_tel}}
+        {% render_field form.num_tel class="form-control" placeholder=form.num_tel.label %}
         </div>
-      </div>  
+      </div>
       <div class="col-md-6 col-lg-6 col-xl-6">
         <div class="form-group">
-          <!--<label for="exampleInputEmail1">Adresse:</label>-->
-          {{form.adresse.label}} : {{form.adresse}}
+        {% render_field form.adresse class="form-control" placeholder=form.adresse.label %}
         </div>
       </div>
   </div>
   <div class="row">
       <div class="col-md-6 col-lg-6 col-xl-6">
         <div class="form-group">
-          <!--<label for="">Login:</label>-->
-          {{form.num_permis.label}} : {{form.num_permis}}
+        {% render_field form.num_docu class="form-control" placeholder=form.num_docu.label %}
         </div>
-      </div>  
-  </div>
-  <div class="row"> 
+      </div>
   </div>
   <div class="row">
-    <div class="col-md-6 col-lg-6 col-xl-6">
+  </div>
+  <div class="row">
+    <div class="col-md-5 col-lg-5 col-xl-5">
           <div class="form-group">
-             <center><button type="submit" class="btn btn-primary" style="margin-left: 500px">Enregistrer</button></center>
+             <center><button type="submit" class="btn btn-primary">Enregistrer</button></center>
           </div>
     </div>
-    <div class="col-md-6 col-lg-6 col-xl-6">
+    <div class="col-md-2 col-lg-2 col-xl-2">
+    </div>
+    <div class="col-md-5 col-lg-5 col-xl-5">
           <div class="form-group">
-            <center><a href="#" type="submit" class="btn btn-primary" style="margin-right: 700px">Retour</a></center> 
+            <center><a href="/" type="submit" class="btn btn-primary">Retour</a></center>
           </div>
     </div>
   </div>
@@ -94,8 +93,8 @@
           {% endfor %}
         </tbody>
       </table>
-    </div> 
+    </div>
   </div>
-    
-  
+
+
 {% endblock %}

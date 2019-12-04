@@ -1,8 +1,8 @@
-from django.http import HttpResponse
+# from django.http import HttpResponse
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
-from vehicule.forms import  ClientForm, UserCreationForm, VehiculeForm
+from vehicule.forms import ClientForm, UserCreationForm, VehiculeForm
 from vehicule.models import Client, Utilisateur, Vehicule
 
 
@@ -35,36 +35,61 @@ def home(request):
 
 @login_required
 def users(request):
-    cxt={}
+    cxt = {}
     ut = Utilisateur.objects.all()
     cxt.update({'ut': ut})
+
+    utilisateur_form = UserCreationForm()
     if request.method == 'POST':
         utilisateur_form = UserCreationForm(request.POST)
         if utilisateur_form.is_valid():
             utilisateur_form.save()
-            redirect('users')
+            return redirect('users')
             # do something.
-    else:
-        utilisateur_form = UserCreationForm()
     cxt.update({'form': utilisateur_form})
     return render(request, 'users.html', cxt)
 
 
 @login_required
+def desactivate_user(request, username):
+    user = Utilisateur.objects.get(username=username)
+    user.is_active = False
+    user.save()
+    return redirect('users')
+
+
+@login_required
+def activate_user(request, username):
+    user = Utilisateur.objects.get(username=username)
+    user.is_active = True
+    user.save()
+    return redirect('users')
+
+
+@login_required
+def edit_user(request, username):
+    user = Utilisateur.objects.get(username=username)
+    user.is_active = False
+    user.save()
+    return redirect('users')
+
+
+@login_required
 def creatclt(request):
-    cxt={}
+    cxt = {}
     clt = Client.objects.all()
     cxt.update({'clt': clt})
 
     if request.method == 'POST':
         client_form = ClientForm(request.POST)
         if client_form.is_valid():
-           client_form.save()
-            # do something.
+            client_form.save()
+            return redirect('creatclt')
     else:
         client_form = ClientForm()
     cxt.update({'form': client_form})
     return render(request, 'creatclt.html', cxt)
+
 
 def enrvehicule(request):
     cxt={}
@@ -80,6 +105,3 @@ def enrvehicule(request):
         vehicule_form = VehiculeForm()
     cxt.update({'form': vehicule_form})
     return render(request,'enrvehicule.html',cxt)
-
-def listveh(request):
-    return render(request,'listveh.html', {})
