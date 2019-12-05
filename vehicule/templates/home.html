@@ -1,18 +1,96 @@
 {% extends "base.html" %}
 
 {% block container %}
- 
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <title></title>
-    </head>
-    <body>
-      <center><h1> BIENVENUE </h1></center>
-      <center><img src="../static/img/img3.jfif " style="position:456px width: 570px;
-  height: 570px;"></center>
-                
-    </body>
-    </html>
-
+  <div class="row">
+    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" style="border-right: 2px solid #000">
+      <table class="table table-bordered table-striped" style="margin-top: 2em" id="vd">
+        <thead>
+          <tr class="time-dispo">
+            <th scope="col" colspan="3">Vehicules Disponible</th>
+          </tr>
+          <tr>
+            <th scope="col">Vehicule</th>
+            <th scope="col">Couleur</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for c in  vehicules_d  %}
+            <tr>
+              <td>{{c.display}}</td> <td>{{c.couleur}}</td> <td><button class="btn btn-success " name="Voir"  title="Voir info"><i class="icon-remove icon-white"></i>Voir</button></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <table class="table table-bordered table-striped" style="margin-top: 2em" id="vl">
+        <thead>
+          <tr class="time-en-location">
+            <th scope="col" colspan="3">Vehicules en location</th>
+          </tr>
+          <tr>
+            <th scope="col">Vehicule</th>
+            <th scope="col">Date de retour</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for c in  vehicules_e  %}
+            <tr>
+              <td>{{c.display}}</td> <td>{{c.date_de_retour}}</td> <td><button class="btn btn-success " name="Voir"  title="Voir info"><i class="icon-remove icon-white"></i>Voir</button></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <table class="table table-bordered table-striped" style="margin-top: 2em" id="vm">
+        <thead>
+          <tr class="time-offline">
+            <th scope="col" colspan="3">Vehicules en Maintenance</th>
+          </tr>
+          <tr>
+            <th scope="col">Vehicule</th>
+            <th scope="col">Date de retour</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for c in  vehicules_em  %}
+            <tr>
+              <td>{{c.display}}</td> <td>{{c.date_de_retour}}</td> <td><button class="btn btn-success " name="Voir"  title="Voir info"><i class="icon-remove icon-white"></i>Voir</button></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+      <ul class="event-list">
+          <li>
+            <time class="time-dispo">
+              <a href="#vd"><span class="day">{{v_dispo_count}}</span></a>
+            </time>
+            <div class="info">
+              <h4 class="title">Disponible</h4>
+              <p class="desc">Nombre de vehicules </p>
+            </div>
+          </li>
+          <li>
+            <time class="time-en-location">
+              <a href="#vl"><span class="day">{{v_en_location_count}}</span></a>
+            </time>
+            <div class="info">
+              <h4 class="title">En location</h4>
+              <p class="desc">Nombre de vehicules </p>
+            </div>
+          </li>
+          <li>
+            <time class="time-offline">
+              <a href="#vm"><span class="day">{{v_en_maintenance_count}}</span></a>
+            </time>
+            <div class="info">
+              <h6 class="title">Hors service</h6>
+              <p class="desc">Nombre de vehicules </p>
+            </div>
+          </li>
+        </ul>
+    </div>
+  </div>
 {% endblock %}

@@ -1,14 +1,11 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from vehicule.forms import UserChangeForm, UserCreationForm
-from vehicule.models import (
-    Utilisateur, Client, Vehicule)
+from vehicule.models import (Utilisateur, Client, Vehicule, Location, LocationItem)
 # Register your models here.
 # from django import forms
 # from django.contrib import admin
 from django.contrib.auth.models import Group
-# from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-# from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
 
 class UtilisateurAdmin(BaseUserAdmin):
@@ -38,17 +35,31 @@ class UtilisateurAdmin(BaseUserAdmin):
     ordering = ('username',)
     filter_horizontal = ()
 
-# Now register the new UserAdmin...
 admin.site.register(Utilisateur, UtilisateurAdmin)
-# ... and, since we're not using Django's built-in permissions,
-# unregister the Group model from admin.
-# admin.site.unregister(Group)
+# admin.site.register(Location)
+# admin.site.register(LocationItem)
 
 
-# @admin.register(Utilisateur)
-# class UtilisateurAdmin(BaseUserAdmin):
+class LocationItemInline(admin.TabularInline):
+    model = LocationItem
 
-#     list_display = ('nom', 'prenom','sexe','categorie','adresse',)
+
+@admin.register(Location)
+class LocationAdmin(admin.ModelAdmin):
+    inlines = [
+        LocationItemInline,
+    ]
+
+
+# @admin.register(LocationItem)
+# class LocationItem(admin.ModelAdmin):
+#     # fields = ['__all__']
+#     # exclude = []
+
+#     model = LocationItem
+#     # inlines = [
+#     #     LocationInline,
+#     # ]
 
 
 @admin.register(Client)
@@ -59,4 +70,4 @@ class Client(admin.ModelAdmin):
 
 @admin.register(Vehicule)
 class Vehicule(admin.ModelAdmin):
-    list_display = ('matricule', 'couleur', 'model', 'marque',)
+    list_display = ('__str__', 'status', )

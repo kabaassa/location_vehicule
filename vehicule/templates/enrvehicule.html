@@ -1,116 +1,98 @@
 {% extends "base.html" %}
-
+{% load static widget_tweaks %}
 {% block container %}
-        
 
-<div class="row-fluid">
-  <div class="block">
-  <div class="navbar navbar-inner block-header">
-       <div class="muted pull-left"></div>
-   </div>
- </div>
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      <h2><center>ENREGISTREMENT DES  VEHICULES </center></h2>
-    </div>
-</div>
-
-<form method='post'>{% csrf_token %}
-  {{form.errors}}
-  <div class="row">
-    <div class="col-md-6 col-lg-6 col-xl-6">
-        <div class="form-group">
-          <!--<label for="">Nom:</label>-->
-          {{form.matricule.label}} : {{form.matricule}}
-        </div>
-    </div>  
-    <div class="col-md-6 col-lg-6 col-xl-6">
-      <div class="form-group">
-        <!--<label for="">Prenom:</label>-->
-        {{form.modele.label}} : {{form.modele}}
-      </div>
-    </div>
-  </div>
-  <div class="row">
-      <div class="col-md-6 col-lg-6 col-xl-6">
-        <div class="form-group">
-          <!--<label for="">Contact:</label>-->
-          {{form.marque.label}} : {{form.marque}}
-        </div>
-      </div>  
-      <div class="col-md-6 col-lg-6 col-xl-6">
-        <div class="form-group">
-          <!--<label for="exampleInputEmail1">Adresse:</label>-->
-          {{form.couleur.label}} : {{form.couleur}}
-        </div>
-      </div>
-  </div>
-  <div class="row">
-      <div class="col-md-6 col-lg-6 col-xl-6">
-        <div class="form-group">
-          <!--<label for="">Login:</label>-->
-          {{form.montant.label}} : {{form.montant}}
-        </div>
-      </div>  
-  </div>
-  <div class="row">
-    <div class="col-md-6 col-lg-6 col-xl-6">
-    </div>
-    <div class="col-md-6 col-lg-6 col-xl-6">
-    </div>
-    <div class="col-md-6 col-lg-6 col-xl-6">
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6 col-lg-6 col-xl-6">
-          <div class="form-group">
-             <center><button type="submit" class="btn btn-primary" style="margin-left: 500px">Enregistrer</button></center>
-          </div>
-    </div>
-    <div class="col-md-6 col-lg-6 col-xl-6">
-          <div class="form-group">
-            <center><a href="#" type="submit" class="btn btn-primary" style="margin-right: 700px">Retour</a></center> 
-          </div>
-    </div>
-  </div>
-</form>
-<br/><br/>
 <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      <h2><center>LISTE DES VEHICULES</center></h2>
-    </div>
-</div>
-  <div class="row">
-    <div class="col-md-12 col-lg-12 col-xl-12">
-        <table class="table table-bordered" style="margin-top: 2em">
-        <thead>
-          <tr>
-            <th scope="col">N</th>
-            <th scope="col">Matricule</th>
-            <th scope="col">Modele</th>
-            <th scope="col">Marque</th>
-            <th scope="col">Couleur</th>
-            <th scope="col">Montant</th>
-            <th scope="col">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-           {% for c in  veh  %}
-          <tr>
-            <td>{{c.id}}</td>
-            <td>{{c.matricule}}</td>
-            <td>{{c.modele}}</td>
-            <td>{{c.marque}}</td>
-            <td>{{c.couleur}}</td>
-            <td>{{c.montant}}</td>
-            <td><button class="btn btn-danger " name="supprimer"  title="supprimer info"><i class="icon-remove icon-white"></i>supprimer</button>
-            <button  type="submit" class="btn btn-warning" name="modifier" title="modifier info">
-                    <span class="icon-edit icon-white"></span>modifier</button>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div> 
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <h2><center>ENREGISTREMENT DES VEHICULES </center></h2>
+    <form method='post'>{% csrf_token %}
+      {{form.errors}}
+      <div class="row">
+        <div class="col-md-6 col-lg-6 col-xl-6">
+            <div class="form-group">
+              <!--<label for="">Nom:</label>-->
+              {% render_field form.matricule class="form-control" placeholder=form.matricule.label %}
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+              {% render_field form.modele class="form-control" placeholder=form.modele.label %}
+          </div>
+        </div>
+      </div>
+      <div class="row">
+          <div class="col-md-6 col-lg-6 col-xl-6">
+            <div class="form-group">
+              {% render_field form.marque class="form-control" placeholder=form.marque.label %}
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-6 col-xl-6">
+            <div class="form-group">
+              {% render_field form.couleur class="form-control" placeholder=form.couleur.label %}
+            </div>
+          </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-lg-6 col-xl-6">
+        </div>
+        <div class="col-md-6 col-lg-6 col-xl-6">
+        </div>
+        <div class="col-md-6 col-lg-6 col-xl-6">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-lg-6 col-xl-6">
+              <div class="form-group">
+                 <center><button type="submit" class="btn btn-primary" style="margin-left: 500px">Enregistrer</button></center>
+              </div>
+        </div>
+      </div>
+    </form>
   </div>
-    
+</div>
+<div class="row">
+  <div class="col-md-12 col-lg-12 col-xl-12">
+      <table class="table table-bordered table-striped">
+      <thead>
+        <tr><th colspan=6>LISTE DES VEHICULES</th></tr>
+        <tr>
+          <th scope="col">N</th>
+          <th scope="col">Matricule</th>
+          <th scope="col">Modele</th>
+          <th scope="col">Marque</th>
+          <th scope="col">Couleur</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+         {% for c in  veh  %}
+        <tr>
+          <td>{{c.id}}</td>
+          <td>{{c.matricule}}</td>
+          <td>{{c.modele}}</td>
+          <td>{{c.marque}}</td>
+          <td>{{c.couleur}}</td>
+          <td>
+          <button  type="submit" class="btn btn-warning btn-sm" name="modifier" title="modifier info">
+                  <span class="icon-edit icon-white"></span>modifier</button>
+          <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+            <div class="btn-group" role="group">
+              <button id="btnGroupDrop1" type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{c.label_status}}
+              </button>
+              <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                {% for status in status %}
+                <a class="dropdown-item" href="/change-status/{{status.0}}/{{c.id}}">{{status.1}}</a>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
 {% endblock %}

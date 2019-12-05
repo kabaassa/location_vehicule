@@ -2,8 +2,9 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
-from vehicule.forms import ClientForm, UserCreationForm, VehiculeForm
-from vehicule.models import Client, Utilisateur, Vehicule
+from vehicule.forms import (
+    ClientForm, UserCreationForm, VehiculeForm, LocationForm)
+from vehicule.models import Client, Location, LocationItem, Utilisateur, Vehicule
 
 
 @login_required
@@ -28,8 +29,21 @@ def login(request):
 
 @login_required
 def home(request):
-    ctx = {'my_name': 'KABA', 'data': [8, 3, 5, 9, 'Totote']}
-
+    vehicules = Vehicule.objects.all()
+    vehicules_d = vehicules.filter(status=Vehicule.D)
+    vehicules_e = vehicules.filter(status=Vehicule.E)
+    vehicules_em = vehicules.filter(status=Vehicule.EM)
+    v_dispo_count = vehicules_d.count()
+    v_en_location_count = vehicules_e.count()
+    v_en_maintenance_count = vehicules_em.count()
+    ctx = {
+        'vehicules_d': vehicules_d,
+        'vehicules_e': vehicules_e,
+        'vehicules_em': vehicules_em,
+        'v_dispo_count': v_dispo_count,
+        'v_en_location_count': v_en_location_count,
+        'v_en_maintenance_count': v_en_maintenance_count,
+    }
     return render(request, 'home.html', ctx)
 
 
@@ -75,12 +89,29 @@ def edit_user(request, username):
 
 
 @login_required
+def cahnge_status_vh(request, status, id):
+    vh = Vehicule.objects.get(id=id)
+    vh.status = status
+    vh.save()
+    return redirect('enrvehicule')
+
+
+@login_required
 def creatclt(request):
     cxt = {}
     clt = Client.objects.all()
     cxt.update({'clt': clt})
 
-    if request.method == 'POST':
+    if request.method == 'POST' and 'location' in request.POST:
+        location_form = LocationForm(request.POST)
+        if location_form.is_valid():
+            location_form.save()
+            return redirect('creatclt')
+    else:
+        location_form = LocationForm()
+    cxt.update({'location_form': location_form})
+
+    if request.method == 'POST' and 'client' in request.POST:
         client_form = ClientForm(request.POST)
         if client_form.is_valid():
             client_form.save()
@@ -92,16 +123,16 @@ def creatclt(request):
 
 
 def enrvehicule(request):
-    cxt={}
+    cxt = {}
     veh = Vehicule.objects.all()
     cxt.update({'veh': veh})
 
     if request.method == 'POST':
         vehicule_form = VehiculeForm(request.POST)
         if vehicule_form.is_valid():
-           vehicule_form.save()
-            # do something.
+            vehicule_form.save()
+            return redirect('enrvehicule')
     else:
         vehicule_form = VehiculeForm()
-    cxt.update({'form': vehicule_form})
-    return render(request,'enrvehicule.html',cxt)
+    cxt.update({'form': vehicule_form, "status": Vehicule.STATUS.items()})
+    return render(request, 'enrvehicule.html', cxt)

@@ -125,35 +125,72 @@ class Client(models.Model):
 
 
 class Vehicule(models.Model):
-    matricule = models.CharField(max_length=100, null=False, blank=False)
-    marque = models.CharField(max_length=100, null=False, blank=False)
-    modele = models.CharField(max_length=100, null=False, blank=False)
+
+    D = 'disponible'
+    E = 'en_location'
+    EM = "en_maintenance"
+    H = "hors_service"
+    STATUS = {
+        D: 'Disponible',
+        E: 'En Location',
+        EM: "En Maintenance",
+        H: "En Hors Service"
+    }
+    matricule = models.CharField("Matricule", max_length=100, unique=False)
+    marque = models.CharField("Marque", max_length=100, null=False, blank=False)
+    modele = models.CharField("Modele", max_length=100, null=False, blank=False)
     couleur = models.CharField("Couleur", max_length=100, null=False, blank=False)
     date_enr = models.DateField(default=date.today)
-    tarif = models.ForeignKey(
-        "Tarif", blank=True, null=True, verbose_name="Tarif",
-        on_delete=models.CASCADE)
-    # montant = models.CharField(max_length=100, null=False, blank=False)
+    update_date = models.DateTimeField(default=datetime.now)
+    status = models.CharField(
+        "Statut", choices=STATUS.items(), default=D, max_length=80)
+
+    def label_status(self):
+        return self.STATUS.get(self.status)
+
+    def display(self):
+        return '{}-{}'.format(self.marque, self.modele)
+
+    # Recuperation de la date de retour du vehicule s'il est en location
+    def date_de_retour(self):
+        try:
+            last_location = LocationItem.objects.filter(
+                vehicule=self).latest('location__date_locat')
+            return last_location.date_retour
+        except Exception as e:
+            return None
 
     def __str__(self):
-        return '{} {} {} {} {}'.format(
-            self.matricule, self.couleur, self.modele, self.date_enr, self.tarif)
+        return '{} {} {} {}'.format(
+            self.modele, self.marque, self.couleur, self.matricule)
 
 
 class Location(models.Model):
-
-    # class Meta:
-    #     pass
-    vehicule = models.ForeignKey(
-        "Vehicule", blank=True, null=True, verbose_name="Vehicule",
-        on_delete=models.CASCADE)
     client = models.ForeignKey(
         "Client", blank=True, null=True, verbose_name="Client",
         on_delete=models.CASCADE)
-    date_locat=models.DateField()
-    date_retour=models.DateField()
+    date_locat = models.DateField("Date de location")
+    localite = models.CharField(null=False, blank=False, max_length=100)
+
     def __str__(self):
-        return'{} {} {} {}'.format( self.date_locat, self.date_retour, self.vehicule, self.client)
+        return'{} {} {}'.format(
+            self.date_locat, self.localite, self.client)
+
+
+class LocationItem(models.Model):
+    vehicule = models.ForeignKey(
+        "Vehicule", blank=True, null=True, verbose_name="Vehicule",
+        on_delete=models.CASCADE)
+    location = models.ForeignKey(
+        "Location", blank=True, null=True, verbose_name="Locations",
+        on_delete=models.CASCADE)
+    date_retour = models.DateField()
+    montant = models.IntegerField()
+
+    def __str__(self):
+        return'{} {} {}'.format(
+            self.location, self.date_retour, self.vehicule)
+
 
 class Facture(models.Model):
 
@@ -165,14 +202,7 @@ class Facture(models.Model):
     client = models.ForeignKey(
         "Client", blank=True, null=True, verbose_name="Client",
         on_delete=models.CASCADE)
-    date_edit=models.DateField()
-    def __str__(self):
-        return'{} {} {} '.format( self.date_edit, self.location, self.client)
+    date_edit = models.DateField()
 
-class Tarif(models.Model):
-
-    # class Meta:
-    #     pass
-    libelle = models.CharField(null=False, blank=False, max_length=100)
     def __str__(self):
-        return' {} '.format( self.libelle,)
+        return'{} {} {} '.format(self.date_edit, self.location, self.client)

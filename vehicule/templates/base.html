@@ -55,7 +55,7 @@
             <i class="fas fa-user-circle fa-fw"></i> {{ user.username }} ({{user.categorie}})
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-            <a class="dropdown-item" href="#">Update password</a>
+            <a class="dropdown-item" href="{% url 'password_change' %}">Password Change</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{% url 'logout' %}"><i class="fa fa-sign-out"></i> deconnection</a>
           </div>
@@ -107,9 +107,7 @@
           <span>CLIENTS ENREGISTRES</span></a>
       </li>
     </ul>
-
     <div id="content-wrapper">
-
       <div class="container-fluid">
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

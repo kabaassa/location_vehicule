@@ -2,7 +2,14 @@ from django import forms
 
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from vehicule.models import Utilisateur, Client, Vehicule
+from vehicule.models import (Utilisateur, Client, Vehicule, Location, LocationItem)
+
+
+class LocationForm(forms.ModelForm):
+    class Meta:
+        model = Location
+        exclude = []
+        fields = '__all__'
 
 
 class ClientForm(forms.ModelForm):
@@ -27,18 +34,13 @@ class ClientForm(forms.ModelForm):
 class VehiculeForm(forms.ModelForm):
     class Meta:
         model = Vehicule
-        widgets = {
-            'matricule': forms.TextInput(attrs={'class': 'form-control'}),
-            'couleur': forms.TextInput(attrs={'class': 'form-control'}),
-            'modele': forms.TextInput(attrs={'class': 'form-control'}),
-            'marque': forms.TextInput(attrs={'class': 'form-control'}),
-        }
         fields = [
-            'matricule',
-            'couleur',
             'modele',
             'marque',
+            'matricule',
+            'couleur',
         ]
+        exclude = ['date_enr']
 
 
 class UserCreationForm(forms.ModelForm):

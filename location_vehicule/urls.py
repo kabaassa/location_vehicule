@@ -33,6 +33,7 @@ urlpatterns = [
     path('vehicule/enrvehicule', views.enrvehicule, name='enrvehicule'),
     path('vehicule/listveh', views.listveh, name='listveh'),
     path('vehicule/navgerant', views.navgerant, name='navgerant'),
+    path('change-status/<status>/<id>', views.cahnge_status_vh, name='cahnge_status'),
     path('vehicule/', include('vehicule.urls')),
     path('admin/', admin.site.urls),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
