@@ -158,7 +158,7 @@ class Vehicule(models.Model):
 class Location(models.Model):
     client = models.ForeignKey(
         "Client", blank=True, null=True, on_delete=models.CASCADE)
-    num_location = models.IntegerField("N°", unique=True)
+    num_location = models.IntegerField("N°", blank=True, null=True)
     date_locat = models.DateField("Date de location")
     localite = models.CharField(null=False, blank=False, max_length=100)
 
@@ -168,8 +168,8 @@ class Location(models.Model):
 
 class LocationItem(models.Model):
     vehicule = models.ForeignKey(
-        "Vehicule", blank=True, null=True, verbose_name="Vehicule",
-        on_delete=models.CASCADE)
+        "Vehicule", blank=True, null=True,
+        verbose_name="Vehicule", on_delete=models.CASCADE)
     location = models.ForeignKey(
         "Location", blank=True, null=True, verbose_name="Locations",
         on_delete=models.CASCADE)
@@ -182,7 +182,6 @@ class LocationItem(models.Model):
 
 
 class Facture(models.Model):
-
     # class Meta:
     #     pass
     location = models.ForeignKey(
