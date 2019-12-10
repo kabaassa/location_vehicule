@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load static widget_tweaks %}
+{% block container %}
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-6 col-lg-6 col-xl-6">
+            <div class="form-group">
+                {% render_field location_form.client class="form-control" placeholder=location_form.client.label %}
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-6 col-xl-6">
+            <div class="form-group">
+                {% render_field location_form.date_locat class="form-control" placeholder=location_form.date_locat.label %}
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-6 col-xl-6">
+            <div class="form-group">
+                {% render_field location_form.localite class="form-control" placeholder=location_form.localite.label %}
+            </div>
+        </div>
+    {{ formset.management_form }}
+    {{ formset.non_form_errors }}
+    <div class="row">
+        {% for form in formset %}
+            <div class="col-md-4 col-lg-4 col-xl-4">
+                <div class="form-group">
+                        {% render_field form.vehicule class="form-control" placeholder=form.vehicule.label %}
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-4 col-xl-4">
+                <div class="form-group">
+                        {% render_field form.date_retour class="form-control" placeholder=form.date_retour.label %}
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-4 col-xl-4">
+                <div class="form-group">
+                        {% render_field form.montant class="form-control" placeholder=form.montant.label %}
+                </div>
+            </div>
+        {% endfor %}
+        <input type="submit" value="Enregistrer"/>
+    </div>
+</form>
+
+<div class="row">
+  <div class="col-md-12 col-lg-12 col-xl-12">
+      <table class="table table-bordered table-striped">
+      <thead>
+        <tr><th colspan=6>LISTE DES VEHICULES</th></tr>
+        <tr>
+          <th scope="col">client</th>
+          <th scope="col">date_locat</th>
+          <th scope="col">localite</th>
+        </tr>
+      </thead>
+      <tbody>
+         {% for c in  locations  %}
+        <tr>
+          <td>{{c.client}}</td>
+          <td>{{c.date_locat}}</td>
+          <td>{{c.localite}}</td>
+          <td>
+          <button  type="submit" class="btn btn-primary btn-sm" name="Voir" title="Voir info">
+            <span class="icon-edit icon-white"></span>Voir</button>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

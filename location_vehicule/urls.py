@@ -26,6 +26,7 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('', views.home, name='home'),
     path('vehicule/users', views.users, name='users'),
+    path('location-vehicule', views.location, name='location'),
     path('del-user <username>', views.desactivate_user, name='del_path'),
     path('active-user <username>', views.activate_user, name='active_path'),
     path('edit-user <username>', views.edit_user, name='edit_path'),

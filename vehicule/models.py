@@ -167,14 +167,13 @@ class Vehicule(models.Model):
 
 class Location(models.Model):
     client = models.ForeignKey(
-        "Client", blank=True, null=True, verbose_name="Client",
-        on_delete=models.CASCADE)
+        "Client", blank=True, null=True, on_delete=models.CASCADE)
+    num_location = models.IntegerField("N°", unique=True)
     date_locat = models.DateField("Date de location")
     localite = models.CharField(null=False, blank=False, max_length=100)
 
     def __str__(self):
-        return'{} {} {}'.format(
-            self.date_locat, self.localite, self.client)
+        return'{} {} {}'.format(self.date_locat, self.localite, self.client)
 
 
 class LocationItem(models.Model):

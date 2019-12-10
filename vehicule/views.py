@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from vehicule.forms import (
-    ClientForm, UserCreationForm, VehiculeForm, LocationForm)
+    ClientForm, UserCreationForm, VehiculeForm, LocationForm, LocationItemFormSet)
 from vehicule.models import Client, Location, LocationItem, Utilisateur, Vehicule
 
 
@@ -45,6 +45,35 @@ def home(request):
         'v_en_maintenance_count': v_en_maintenance_count,
     }
     return render(request, 'home.html', ctx)
+
+
+@login_required
+def location(request):
+    locations = Location.objects.all()
+    location = Location()
+    location_form = LocationForm(instance=location) # setup a form for the parent
+
+    if request.method == "POST":
+        location_form = LocationForm(request.POST)
+        formset = LocationItemFormSet(request.POST, request.FILES)
+
+        if location_form.is_valid():
+            created_location = location_form.save(commit=False)
+            formset = LocationItemFormSet(request.POST, request.FILES, instance=created_location)
+
+            if formset.is_valid():
+                created_location.save()
+                formset.save()
+                return redirect("location")
+    else:
+        location_form = LocationForm(instance=location)
+        formset = LocationItemFormSet()
+
+    return render(request, "add_location.html", {
+        "location_form": location_form,
+        "locations": locations,
+        "formset": formset,
+    })
 
 
 @login_required

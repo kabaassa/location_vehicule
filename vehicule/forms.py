@@ -1,8 +1,9 @@
 from django import forms
-
+from django.forms.models import inlineformset_factory
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from vehicule.models import (Utilisateur, Client, Vehicule, Location, LocationItem)
+# from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from vehicule.models import (
+    Utilisateur, Client, Vehicule, Location, LocationItem)
 
 
 class LocationForm(forms.ModelForm):
@@ -10,6 +11,23 @@ class LocationForm(forms.ModelForm):
         model = Location
         exclude = []
         fields = '__all__'
+
+
+class LocationItemForm(forms.ModelForm):
+    class Meta:
+        model = LocationItem
+        exclude = ()
+        fields = '__all__'
+
+LocationItemFormSet = inlineformset_factory(
+    Location, LocationItem,
+    fields=(
+        'vehicule',
+        'location',
+        'date_retour',
+        'montant',),
+    extra=10,
+    can_delete=False,)
 
 
 class ClientForm(forms.ModelForm):
