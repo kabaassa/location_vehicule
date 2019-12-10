@@ -6,11 +6,6 @@ from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
 
 class UtilisateurManager(BaseUserManager):
     def create_user(self, username, password=None):
-        """
-        Creates and saves a User with the given email, date of
-        birth and password.
-        """
-
         user = self.model(
             username=username,
         )
@@ -20,10 +15,6 @@ class UtilisateurManager(BaseUserManager):
         return user
 
     def create_superuser(self, username, password):
-        """
-        Creates and saves a superuser with the given username, date of
-        birth and password.
-        """
         user = self.create_user(
             username,
             password=password,
@@ -31,7 +22,6 @@ class UtilisateurManager(BaseUserManager):
         user.is_admin = True
         user.save(using=self._db)
         return user
-
 
 class Utilisateur(AbstractBaseUser):
 
@@ -99,7 +89,7 @@ class Utilisateur(AbstractBaseUser):
         return reverse("edit_path", args=[self.username])
 
     def active_url(self):
-        return reverse("active_path", args=[self.username])
+       return reverse("active_path", args=[self.username])
 
 
 class Client(models.Model):
